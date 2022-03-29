@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+        var valCon = [
+            'basic', 'beach', 'begin', 'below', 'bench', 'black', 'blind',
+            'blood', 'brain', 'bread', 'break', 'bring', 'brown', 'build',
+            'carry', 'catch', 'chair', 'cheap', 'check', 'child', 'chose',
+            'class', 'clean', 'clear', 'clock', 'close', 'count', 'cover',
+            'cream', 'crime', 'cross', 'crowd', 'dance', 'dream', 'dress',
+            'drink', 'drive', 'early', 'earth', 'empty', 'enjoy', 'enter',
+            'error', 'event', 'every', 'exist', 'field', 'fight',
+            'first', 'floor', 'focus', 'force', 'frame', 'fresh', 'front',
+            'fruit', 'funny', 'glass', 'grade', 'great', 'green', 'group',
+            'guess', 'guest', 'happy', 'heart', 'heavy', 'horse', 'house',
+            'human', 'image', 'large', 'later', 'laugh', 'learn', 'leave',
+            'level', 'light', 'local', 'lucky', 'lunch', 'magic', 'major',
+            'march', 'match', 'maybe', 'metal', 'money', 'month',
+            'mouse', 'mouth', 'movie', 'music', 'never', 'night', 'noise',
+            'ocean', 'often', 'order', 'other', 'paper', 'party', 'peace',
+            'phone', 'photo', 'place', 'plane', 'plant', 'power', 'press',
+            'price', 'pride', 'print', 'prize', 'proud', 'quick', 'quiet',
+            'reach', 'ready', 'right', 'river', 'rough', 'round', 'scene',
+            'score', 'sense', 'serve', 'shape', 'share', 'sharp', 'shelf',
+            'shirt', 'shock', 'short', 'since', 'skill', 'sleep', 'small',
+            'smart', 'smile', 'smoke', 'sorry', 'sound', 'space', 'speak',
+            'speed', 'spend', 'sport', 'stage', 'stand', 'start', 'steel',
+            'stick', 'still', 'stone', 'store', 'storm', 'story', 'study',
+            'style', 'sugar', 'super', 'sweet', 'table', 'taste', 'teach',
+            'thank', 'theme', 'there', 'thick', 'thing', 'think', 'third',
+            'throw', 'tight', 'tired', 'title', 'today', 'total', 'touch',
+            'tough', 'tower', 'train', 'treat', 'trust', 'twice', 'under',
+            'until', 'upset', 'usual', 'visit', 'voice', 'waste', 'watch',
+            'water', 'wheel', 'while', 'white', 'whole', 'woman',
+            'world', 'worry', 'write', 'wrong', 'young'
+        ];
+        var val = valCon[Math.floor(Math.random() * valCon.length)];
+        var con = [0, 0, 0, 0, 0];
+        var sum = 0;
+
+        $(function() {
+            $('.insert').click(function() {
+                var input = document.querySelectorAll('.input'); // 정답과 비교하기 위해 input값을 가져온 것
+                // alert($(".input").length);
+                for (var i = 0; i < 5; i++) {
+                    if ((input[i].value == "") || (input[i].value == null)) { // 공백이 있으면 실행 불가
+                        alert('공백이 있습니다');
+                        return;
+                    }
+                }
+
+                for (var i = 0; i < 5; i++) {
+                    if (input[i].value == val[i]) {
+                        $(input[i]).css({
+                            background: "rgb(122, 190, 130)"
+                        })
+                        con[i] = 1; // 자리마다 1을 올려 5가 되면 정답처리
+                    } else if (val.includes(input[i].value)) {
+                        $(input[i]).css({
+                            background: "rgb(255, 185, 107)"
+                        })
+                    } else {
+                        $(input[i]).css({
+                            background: "rgb(211, 211, 211)"
+                        })
+                    }
+                    input[i].classList.remove('input'); // input 클래스를 삭제하고 다른 input을 생성하기 위함
+                }
+
+                var moreInsert = `
+                <br>
+                <div>
+                    <input class="input" type='text' maxlength='1'>
+                    <input class="input" type='text' maxlength='1'>
+                    <input class="input" type='text' maxlength='1'>
+                    <input class="input" type='text' maxlength='1'>
+                    <input class="input" type='text' maxlength='1'>
+                </div>
+                ` // 오답시 추가할 input 틀
+
+                for (var i = 0; i < 5; i++) { // con이 총합 5가 되는지 확인
+                    sum += con[i];
+                }
+
+                if (sum == 5) { // 5일시 정답
+                    alert('정답 : ' + val);
+                } else { // 아닐시 새로운 input생성 후 sum값 초기화
+                    document.querySelector('main').insertAdjacentHTML('beforeend', moreInsert);
+                    sum = 0;
+                    return;
+                }
+
+            })
+        })
+    </script>
+
+    <style>
+        @font-face {
+            font-family: 'HangeulNuri-Bold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/HangeulNuri-Bold.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        input {
+            width: 80px;
+            height: 80px;
+            font-size: 70px;
+            text-align: center;
+            border: black 1px solid;
+        }
+        
+        body {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            margin: 0 auto;
+        }
+        
+        .insert {
+            width: 150px;
+            height: 80px;
+            font-size: 30px;
+            background-color: rgb(255, 127, 80);
+            border: solid 1px black;
+        }
+    </style>
+
+</head>
+
+<body>
+    <main>
+        <h1>Wordle</h1>
+        <hr>
+
+        <div>
+            <input class="input" type='text' maxlength='1'>
+            <input class="input" type='text' maxlength='1'>
+            <input class="input" type='text' maxlength='1'>
+            <input class="input" type='text' maxlength='1'>
+            <input class="input" type='text' maxlength='1'>
+        </div>
+    </main>
+
+    <br>
+    <button class="insert">제출</button>
+</body>
+
+</html>
